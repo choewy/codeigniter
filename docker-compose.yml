@@ -1,0 +1,38 @@
+version: '3.8'
+
+name: codeigniter
+
+services:
+  codeigniter:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - .:/codeigniter:cached
+      - .devcontainer/.volumes/apache/config/apache2.conf:/etc/apache2/apache2.conf
+      - .devcontainer/.volumes/apache/config/ports.conf:/etc/apache2/ports.conf
+      - .devcontainer/.volumes/apache/config/sites-available:/etc/apache2/sites-available
+    command: sleep infinity
+    networks:
+      - codeigniter
+
+  mariadb:
+    image: mysql:8
+    ports:
+      - 33061:3306
+    volumes:
+      - .devcontainer/.volumes/mysql/conf.d:/etc/mysql/conf.d:ro
+      - .devcontainer/.volumes/mysql/data:/var/lib/mysql
+      - .devcontainer/.volumes/mysql/initdb:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: local
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - codeigniter
+
+networks:
+  codeigniter:
+    driver: bridge

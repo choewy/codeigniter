@@ -1,0 +1,25 @@
+{
+  "name": "CodeIgniter",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "codeigniter",
+  "workspaceFolder": "/codeigniter",
+  "shutdownAction": "stopCompose",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "php.validate.executablePath": "/usr/bin/php"
+      },
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "devsense.phptools-vscode",
+        "xdebug.php-pack",
+        "bmewburn.vscode-intelephense-client",
+        "rifi2k.format-html-in-php",
+        "neilbrayfield.php-docblocker",
+        "devsense.intelli-php-vscode",
+        "small.php-ci"
+      ]
+    }
+  },
+  "postStartCommand": "bash .devcontainer/post-start.sh"
+}
